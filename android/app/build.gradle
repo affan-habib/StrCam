@@ -170,6 +170,9 @@ android {
                 }
             }
         }
+            missingDimensionStrategy 'react-native-camera', 'general' // <--- insert this line
+            multiDexEnabled true
+
     }
 
     if (isNewArchitectureEnabled()) {
