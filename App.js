@@ -4,19 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CustomButton from './src/components/CustomButton';
 import Camera from './src/screens/Camera';
-
-function Gallery({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-      <CustomButton
-        title="Camera"
-        color='#0080ff'
-        onPressFunction={() => { navigation.navigate('Camera') }}
-      />
-    </View>
-  );
-}
+import Gallery from './src/screens/Gallery';
 
 const Tab = createBottomTabNavigator();
 
