@@ -11,16 +11,17 @@ import CustomButton from '../components/CustomButton';
 export default function Camera() {
 
     const [{ cameraRef }, { takePicture }] = useCamera(null);
-
+    console.log(RNFS)
     const captureHandle = async () => {
         try {
             const data = await takePicture();
             console.log(data.uri);
             const filePath = data.uri;
-            const newFilePath = RNFS.ExternalDirectoryPath + '/MyTest.jpg';
+            const newFilePath = RNFS.PicturesDirectoryPath + `/MyTest-jjfffjj.jpg`;
             RNFS.moveFile(filePath, newFilePath)
                 .then(() => {
                     console.log('IMAGE MOVED', filePath, '-- to --', newFilePath);
+                    
                 })
                 .catch(error => {
                     console.log(error);

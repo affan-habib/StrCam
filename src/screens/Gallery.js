@@ -68,12 +68,13 @@ const Gallery = () => {
                         flex: 1,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: '#333',
+                        // backgroundColor: '#333',
                       }}
                     >
                       <Image
                         style={{
                           width: "100%",
+                          height: "auto",
                           flex: 1,
                         }}
                         resizeMode="contain"

@@ -5,14 +5,30 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CustomButton from './src/components/CustomButton';
 import Camera from './src/screens/Camera';
 import Gallery from './src/screens/Gallery';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Camera" component={Camera} />
-      <Tab.Screen name="Gallery" component={Gallery} />
+    <Tab.Navigator initialRouteName="Camera"
+      tabBarOptions={{
+        activeTintColor: '#e91e63',
+      }}>
+      <Tab.Screen name="Camera"
+        options={{
+          tabBarLabel: 'Camera',
+          tabBarIcon: ({ color }) => (
+            <Icon name="camera-alt" size={25} color={color} />
+          ),
+        }}
+        component={Camera} />
+      <Tab.Screen name="Gallery"
+        options={{
+          tabBarLabel: 'Gallery',
+          tabBarIcon: ({ color }) => (
+            <Icon name="photo" size={25} color={color} />
+          ),
+        }} component={Gallery} />
     </Tab.Navigator>
   );
 }
