@@ -8,7 +8,7 @@ import { useCamera } from 'react-native-camera-hooks';
 import RNFS from 'react-native-fs';
 import IconButton from '../components/IconButton';
 import moment from 'moment';
-import CameraRoll from '@react-native-community/cameraroll';
+// import CameraRoll from '@react-native-community/cameraroll';
 
 export default function Camera() {
 
@@ -40,12 +40,14 @@ export default function Camera() {
                 type={RNCamera.Constants.Type.back}
                 style={styles.preview}
             >
+                <View style={{marginBottom: 35}}>
                 <IconButton
                     name="linked-camera"
-                    color='white'
-                    bgcolor="red"
+                    color="#0e9594"
+                    bgcolor="white"
                     onPressFunction={() => captureHandle()}
                 />
+                </View>
             </RNCamera>
         </View>
     );

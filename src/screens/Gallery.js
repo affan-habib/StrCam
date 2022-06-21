@@ -13,7 +13,7 @@ import Swiper from 'react-native-swiper';
 import IconButton from '../components/IconButton';
 import globalStyles from '../styles/globalStyles';
 
-const Gallery = () => {
+const Gallery = ({navigation}) => {
 
   const [nodes, setNodes] = useState([]);
   const [detailViewVisible, setDetailViewVisibility] = useState(false);
@@ -24,7 +24,7 @@ const Gallery = () => {
       .then(() => {
         getPhotos()
       })
-  }, [])
+  },[{navigation}])
 
   const checkPermission = async () => {
     const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
@@ -44,7 +44,7 @@ const Gallery = () => {
 
   const getPhotos = async () => {
     const photos = await CameraRoll.getPhotos({
-      first: 4
+      first: 40
     })
 
     setNodes(photos.edges.map(edge => edge.node))
