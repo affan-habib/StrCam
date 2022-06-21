@@ -11,10 +11,12 @@ import {
 import CameraRoll from '@react-native-community/cameraroll';
 import Swiper from 'react-native-swiper';
 import IconButton from '../components/IconButton';
-import globalStyles from '../styles/globalStyles';
+import { useToast } from "react-native-toast-notifications";
+import Pagination from '../components/Pagination';
+import { useNavigation } from '@react-navigation/native';
 
 const Gallery = ({navigation}) => {
-
+  const toast = useToast();
   const [nodes, setNodes] = useState([]);
   const [detailViewVisible, setDetailViewVisibility] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -24,7 +26,10 @@ const Gallery = ({navigation}) => {
       .then(() => {
         getPhotos()
       })
-  },[{navigation}])
+      // .then(()=>{
+      //   toast.show("Test Notification", {type: "normal"});
+      // })
+  },[])
 
   const checkPermission = async () => {
     const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
@@ -105,7 +110,6 @@ const Gallery = ({navigation}) => {
               </Swiper>
             )
             : (
-              <View>
 
                 <View
                   style={{
@@ -147,39 +151,10 @@ const Gallery = ({navigation}) => {
                       )
                     )
                   }
-
-                </View>
-
-                <View style={globalStyles.pagination}>
-                  <IconButton
-                    name="arrow-back"
-                    color="white"
-                    bgcolor="#0e9594"
-                    onPressFunction={() => {
-                      // setDetailViewVisibility(false)
-                    }}>
-                    {/* <Text>prev</Text> */}
-                  </IconButton>
-                  <IconButton
-                    name="arrow-forward"
-                    color="white"
-                    bgcolor="#0e9594"
-                    onPressFunction={() => {
-                      // setDetailViewVisibility(false)
-                    }}>
-                    {/* <Text>close</Text> */}
-                  </IconButton>
-                  <IconButton
-                    name="refresh"
-                    color="white"
-                    bgcolor="#0e9594"
-                    onPressFunction={getPhotos}>
-                    {/* <Text>close</Text> */}
-                  </IconButton>
-                </View>
               </View>
             )
         }
+        <Pagination/>
       </ScrollView>
     </SafeAreaView>
   );

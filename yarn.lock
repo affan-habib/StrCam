@@ -6091,6 +6091,11 @@
   dependencies:
     "prop-types" "^15.5.10"
 
+"react-native-toast-notifications@^3.3.0":
+  "integrity" "sha512-R94XMwHzovGc3CskniqM2EwS6GqVWgfynXi9ua/qvS+F7eD2dvlkhDhf+eUQNpTexQLoG5MYOJRQ+J8WQs3LbQ=="
+  "resolved" "https://registry.npmjs.org/react-native-toast-notifications/-/react-native-toast-notifications-3.3.0.tgz"
+  "version" "3.3.0"
+
 "react-native-vector-icons@^9.1.0":
   "integrity" "sha512-2AHZ/h9d/+rC0odz+OwbGNlc1Lik/pHhSixn4HfC8RtQ8CxfSBZ6gg7bTLcZhdSvZN+ZEGi30Fj+ZnOSQy+smg=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-9.1.0.tgz"

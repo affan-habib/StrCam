@@ -2,14 +2,16 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import IconButton from './src/components/IconButton';
 import Camera from './src/screens/Camera';
 import Gallery from './src/screens/Gallery';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { ToastProvider } from 'react-native-toast-notifications'
+
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
+
     <Tab.Navigator initialRouteName="Camera"
       tabBarOptions={{
         activeTintColor: '#e95a0c',
@@ -35,8 +37,10 @@ function MyTabs() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
+    <ToastProvider>
+      <NavigationContainer>
+        <MyTabs />
+      </NavigationContainer>
+    </ToastProvider>
   );
 }

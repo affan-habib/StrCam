@@ -8,10 +8,11 @@ import { useCamera } from 'react-native-camera-hooks';
 import RNFS from 'react-native-fs';
 import IconButton from '../components/IconButton';
 import moment from 'moment';
+import { useToast } from 'react-native-toast-notifications';
 // import CameraRoll from '@react-native-community/cameraroll';
 
 export default function Camera() {
-
+    const toast = useToast();
     const [{ cameraRef }, { takePicture }] = useCamera(null);
     console.log(RNFS)
     const captureHandle = async () => {
@@ -22,15 +23,15 @@ export default function Camera() {
             const newFilePath = RNFS.PicturesDirectoryPath + `/str_cam_by_affan_${moment().hours(Number)}.jpg`;
             RNFS.moveFile(filePath, newFilePath)
                 .then(() => {
-                    console.log('IMAGE MOVED', filePath, '-- to --', newFilePath);
                     
+                    toast.show("Image saved to" + newFilePath , {type: "success"});
                 })
                 .catch(error => {
                     console.log(error);
                 })
-        } catch (error) {
-            console.log(error);
-        }
+            } catch (error) {
+                console.log(error);
+            }
     }
 
     return (
