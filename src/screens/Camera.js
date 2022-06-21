@@ -43,6 +43,7 @@ export default function Camera() {
                 <IconButton
                     name="linked-camera"
                     color='white'
+                    bgcolor="red"
                     onPressFunction={() => captureHandle()}
                 />
             </RNCamera>

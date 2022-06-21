@@ -6,11 +6,12 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
-  Button
 } from 'react-native';
 
 import CameraRoll from '@react-native-community/cameraroll';
 import Swiper from 'react-native-swiper';
+import IconButton from '../components/IconButton';
+import globalStyles from '../styles/globalStyles';
 
 const Gallery = () => {
 
@@ -33,8 +34,8 @@ const Gallery = () => {
     }
 
     const status = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE, {
-      title: "Image gallery permissions",
-      message: "Image gallery needs your permission to access your photos",
+      title: "StraTiv Gallery",
+      message: "StrCam need access your photos",
       buttonPositive: "OK",
     })
 
@@ -43,7 +44,7 @@ const Gallery = () => {
 
   const getPhotos = async () => {
     const photos = await CameraRoll.getPhotos({
-      first: 50
+      first: 4
     })
 
     setNodes(photos.edges.map(edge => edge.node))
@@ -54,92 +55,130 @@ const Gallery = () => {
       <ScrollView>
         {
           detailViewVisible
-          ? (
-            <Swiper
-              loop={false}
-              index={selectedIndex}
-            >
-              {
-                nodes.map(
-                  (node, index) => (
-                    <View
-                      key={index}
-                      style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        // backgroundColor: '#333',
-                      }}
-                    >
-                      <Image
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          flex: 1,
-                        }}
-                        resizeMode="contain"
-                        source={{
-                          uri: node.image.uri
-                        }}
-                      />
+            ? (
+              <Swiper
+                loop={false}
+                index={selectedIndex}
+              >
+                {
+                  nodes.map(
+                    (node, index) => (
                       <View
+                        key={index}
                         style={{
-                          position: 'absolute',
-                          bottom: 60
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          // backgroundColor: '#333',
                         }}
                       >
-                        <Button
-                          title="Close"
-                          onPress={() => {
-                            setDetailViewVisibility(false)
+                        <Image
+                          style={{
+                            width: "100%",
+                            height: "50%",
+                            flex: 1,
+                          }}
+                          resizeMode="contain"
+                          source={{
+                            uri: node.image.uri
                           }}
                         />
+                        <View
+                          style={{
+                            position: 'absolute',
+                            top: 50,
+                            right: 10,
+                          }}
+                        >
+                          <IconButton
+                            name="close"
+                            color="white"
+                            onPressFunction={() => {
+                              setDetailViewVisibility(false)
+                            }} />
+
+                        </View>
                       </View>
-                    </View>
+                    )
                   )
-                )
-              }
-            </Swiper>
-          )
-          : (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-              }}
-            >
-              {
-                nodes.map(
-                  (node, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={{
-                        height: 100,
-                        minWidth: 100,
-                        flex: 1
-                      }}
-                      onPress={() => {
-                        setDetailViewVisibility(true)
-                        setSelectedIndex(index)
-                      }}
-                    >
-                      <Image
-                        style={{
-                          height: 100,
-                          minWidth: 100,
-                          flex: 1
-                        }}
-                        source={{
-                          uri: node.image.uri
-                        }}
-                      />
-                    </TouchableOpacity>
-                  )
-                )
-              }
-            </View>
-          )
+                }
+              </Swiper>
+            )
+            : (
+              <View>
+
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    margin: 10,
+                  }}
+                >
+                  {
+                    nodes.map(
+                      (node, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          style={{
+                            minHeight: "50%",
+                            minWidth: 100,
+                            maxWidth: "50%",
+                            flex: 1,
+                            margin: 10,
+                          }}
+                          onPress={() => {
+                            setDetailViewVisibility(true)
+                            setSelectedIndex(index)
+                          }}
+                        >
+                          <Image
+                            style={{
+                              height: 100,
+                              borderRadius: 5,
+                              minWidth: 100,
+                              flex: 1
+                            }}
+                            source={{
+                              uri: node.image.uri
+                            }}
+                          />
+                        </TouchableOpacity>
+                      )
+                    )
+                  }
+
+                </View>
+
+                <View style={globalStyles.pagination}>
+                  <IconButton
+                    name="arrow-back"
+                    color="white"
+                    bgcolor="#0e9594"
+                    onPressFunction={() => {
+                      // setDetailViewVisibility(false)
+                    }}>
+                    {/* <Text>prev</Text> */}
+                  </IconButton>
+                  <IconButton
+                    name="arrow-forward"
+                    color="white"
+                    bgcolor="#0e9594"
+                    onPressFunction={() => {
+                      // setDetailViewVisibility(false)
+                    }}>
+                    {/* <Text>close</Text> */}
+                  </IconButton>
+                  <IconButton
+                    name="refresh"
+                    color="white"
+                    bgcolor="#0e9594"
+                    onPressFunction={getPhotos}>
+                    {/* <Text>close</Text> */}
+                  </IconButton>
+                </View>
+              </View>
+            )
         }
       </ScrollView>
     </SafeAreaView>
