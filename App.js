@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CustomButton from './src/components/CustomButton';
+import IconButton from './src/components/IconButton';
 import Camera from './src/screens/Camera';
 import Gallery from './src/screens/Gallery';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -12,7 +12,7 @@ function MyTabs() {
   return (
     <Tab.Navigator initialRouteName="Camera"
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: '#e95a0c',
       }}>
       <Tab.Screen name="Camera"
         options={{

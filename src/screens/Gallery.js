@@ -43,7 +43,7 @@ const Gallery = () => {
 
   const getPhotos = async () => {
     const photos = await CameraRoll.getPhotos({
-      first: 10
+      first: 50
     })
 
     setNodes(photos.edges.map(edge => edge.node))

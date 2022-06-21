@@ -6,7 +6,9 @@ import {
 import { RNCamera } from 'react-native-camera';
 import { useCamera } from 'react-native-camera-hooks';
 import RNFS from 'react-native-fs';
-import CustomButton from '../components/CustomButton';
+import IconButton from '../components/IconButton';
+import moment from 'moment';
+import CameraRoll from '@react-native-community/cameraroll';
 
 export default function Camera() {
 
@@ -17,7 +19,7 @@ export default function Camera() {
             const data = await takePicture();
             console.log(data.uri);
             const filePath = data.uri;
-            const newFilePath = RNFS.PicturesDirectoryPath + `/MyTest-jjfffjj.jpg`;
+            const newFilePath = RNFS.PicturesDirectoryPath + `/str_cam_by_affan_${moment().hours(Number)}.jpg`;
             RNFS.moveFile(filePath, newFilePath)
                 .then(() => {
                     console.log('IMAGE MOVED', filePath, '-- to --', newFilePath);
@@ -38,9 +40,9 @@ export default function Camera() {
                 type={RNCamera.Constants.Type.back}
                 style={styles.preview}
             >
-                <CustomButton
-                    title="Capture"
-                    color='#1eb900'
+                <IconButton
+                    name="linked-camera"
+                    color='white'
                     onPressFunction={() => captureHandle()}
                 />
             </RNCamera>
