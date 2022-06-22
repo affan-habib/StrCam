@@ -11,25 +11,23 @@ import {
 import CameraRoll from '@react-native-community/cameraroll';
 import Swiper from 'react-native-swiper';
 import IconButton from '../components/IconButton';
+import { useIsFocused } from "@react-navigation/native";
 import { useToast } from "react-native-toast-notifications";
-import Pagination from '../components/Pagination';
-import { useNavigation } from '@react-navigation/native';
 
-const Gallery = ({navigation}) => {
-  const toast = useToast();
+const Gallery = (props) => {
+  const isFocused = useIsFocused();
   const [nodes, setNodes] = useState([]);
   const [detailViewVisible, setDetailViewVisibility] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    checkPermission()
-      .then(() => {
-        getPhotos()
-      })
-      // .then(()=>{
-      //   toast.show("Test Notification", {type: "normal"});
-      // })
-  },[])
+    if (isFocused) {
+      checkPermission()
+        .then(() => {
+          getPhotos()
+        })
+    }
+  }, [isFocused])
 
   const checkPermission = async () => {
     const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
@@ -49,7 +47,7 @@ const Gallery = ({navigation}) => {
 
   const getPhotos = async () => {
     const photos = await CameraRoll.getPhotos({
-      first: 40
+      first: 4
     })
 
     setNodes(photos.edges.map(edge => edge.node))
@@ -72,6 +70,7 @@ const Gallery = ({navigation}) => {
                         key={index}
                         style={{
                           flex: 1,
+                          flexWrap: 'wrap',
                           alignItems: 'center',
                           justifyContent: 'center',
                           // backgroundColor: '#333',
@@ -80,7 +79,7 @@ const Gallery = ({navigation}) => {
                         <Image
                           style={{
                             width: "100%",
-                            height: "50%",
+                            height: 200,
                             flex: 1,
                           }}
                           resizeMode="contain"
@@ -98,6 +97,7 @@ const Gallery = ({navigation}) => {
                           <IconButton
                             name="close"
                             color="white"
+                            bgcolor="#e95a0c"
                             onPressFunction={() => {
                               setDetailViewVisibility(false)
                             }} />
@@ -111,50 +111,48 @@ const Gallery = ({navigation}) => {
             )
             : (
 
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    margin: 10,
-                  }}
-                >
-                  {
-                    nodes.map(
-                      (node, index) => (
-                        <TouchableOpacity
-                          key={index}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  margin: 10,
+                }}
+              >
+                {
+                  nodes.map(
+                    (node, index) => (
+                      <TouchableOpacity
+                        key={index}
+                        style={{
+                          height: 200,
+                          width: 100,
+
+                          margin: 10,
+                        }}
+                        onPress={() => {
+                          setDetailViewVisibility(true)
+                          setSelectedIndex(index)
+                        }}
+                      >
+                        <Image
                           style={{
-                            minHeight: "50%",
+                            borderRadius: 5,
                             minWidth: 100,
-                            maxWidth: "50%",
                             flex: 1,
-                            margin: 10,
+                            resizeMode: 'contain'
                           }}
-                          onPress={() => {
-                            setDetailViewVisibility(true)
-                            setSelectedIndex(index)
+                          source={{
+                            uri: node.image.uri
                           }}
-                        >
-                          <Image
-                            style={{
-                              height: 100,
-                              borderRadius: 5,
-                              minWidth: 100,
-                              flex: 1
-                            }}
-                            source={{
-                              uri: node.image.uri
-                            }}
-                          />
-                        </TouchableOpacity>
-                      )
+                        />
+                      </TouchableOpacity>
                     )
-                  }
+                  )
+                }
               </View>
             )
         }
-        <Pagination/>
       </ScrollView>
     </SafeAreaView>
   );
